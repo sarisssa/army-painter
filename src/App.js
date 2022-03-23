@@ -1,24 +1,19 @@
-import logo from './logo.svg';
+import React, { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Canvas>
+      <ambientLight intensity={0.3} />
+      <spotLight intensity={0.3} angle={0.1} penumbra={1} position={[5, 25, 20]} />
+      <Suspense fallback={null}>
+      </Suspense>
+      <OrbitControls minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} enableZoom={true} enablePan={true} />
+    </Canvas>
   );
 }
 
