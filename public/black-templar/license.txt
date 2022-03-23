@@ -1,0 +1,11 @@
+Model Information:
+* title:	Black Templar Model
+* source:	https://sketchfab.com/3d-models/black-templar-model-ead32b63f7d24ec9b85e0ad9a3720745
+* author:	ReclusiumRecreations (https://sketchfab.com/ReclusiumRecreations)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Black Templar Model" (https://sketchfab.com/3d-models/black-templar-model-ead32b63f7d24ec9b85e0ad9a3720745) by ReclusiumRecreations (https://sketchfab.com/ReclusiumRecreations) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
