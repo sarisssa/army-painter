@@ -1,5 +1,5 @@
-import React, { Suspense, useRef } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useRef, useEffect } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls } from "@react-three/drei";
 
 import './App.css';
@@ -54,7 +54,8 @@ const Model = ({ ...props }) => {
 
 function App() {
   return (
-    <Canvas>
+    <Canvas concurrent pixelRatio={[1, 1.5]}>
+      <Camera />
       <ambientLight intensity={0.3} />
       <spotLight intensity={0.3} angle={0.1} penumbra={1} position={[5, 25, 20]} />
       <Suspense fallback={null}>
@@ -64,5 +65,17 @@ function App() {
     </Canvas>
   );
 }
+
+const Camera = () => {
+  useEffect(() => {
+    camera.position.set(-10, -250, 0);
+    camera.rotation.set(0, 0, 0);
+    camera.near = 0.1;
+    camera.far = 10000;
+    camera.updateProjectionMatrix();
+  }, []);
+  const { camera } = useThree();
+  return null;
+};
 
 export default App;
