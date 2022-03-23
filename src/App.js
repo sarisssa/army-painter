@@ -54,15 +54,22 @@ const Model = ({ ...props }) => {
 
 function App() {
   return (
-    <Canvas concurrent pixelRatio={[1, 1.5]}>
-      <Camera />
-      <ambientLight intensity={0.3} />
-      <spotLight intensity={0.3} angle={0.1} penumbra={1} position={[5, 25, 20]} />
-      <Suspense fallback={null}>
-        <Model />
-      </Suspense>
-      <OrbitControls minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} enableZoom={true} enablePan={true} />
-    </Canvas>
+    <div className="canvas-container" >
+      <Canvas concurrent pixelRatio={[1, 1.5]}>
+        <Camera />
+        <ambientLight intensity={0.3} />
+        <spotLight intensity={0.3} angle={0.1} penumbra={1} position={[5, 25, 20]} />
+        <Suspense fallback={null}>
+          <Model />
+        </Suspense>
+        <OrbitControls
+          minPolarAngle={Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
+          enableZoom={true}
+          enablePan={true}
+        />
+      </Canvas>
+    </div>
   );
 }
 
