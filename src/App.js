@@ -1,6 +1,7 @@
 import React, { Suspense, useRef, useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls } from "@react-three/drei";
+import { HexColorPicker } from "react-colorful";
 
 import './App.css';
 
@@ -55,6 +56,7 @@ const Model = ({ ...props }) => {
 function App() {
   return (
     <div className="canvas-container" >
+      <HexColorPicker className="model-painter" />
       <Canvas concurrent pixelRatio={[1, 1.5]}>
         <Camera />
         <ambientLight intensity={0.3} />
