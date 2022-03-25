@@ -2,26 +2,40 @@ import React, { Suspense, useRef, useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import { HexColorPicker } from "react-colorful";
-import { proxy, useProxy } from "valtio";
+import { proxy, useProxy, useSnapshot } from "valtio";
 
 import './App.css';
 
 const state = proxy({
-  curArmour: null,
-  armourCategories: {
-    helmet: ['Helmet', "#ffffff"],
-    cuirass: ['Cuirass', "#ffffff"],
-    leftVambrance: ['Left Vambrace', "#ffffff"],
-    rightVambrace: ['Right Vambrace', "#ffffff"],
-    backpack: ['Backpack', "#ffffff"],
-    leftPauldron: ['Left Pauldron', "#ffffff"],
-    rightPauldron: ['Right Pauldron', "#ffffff"],
-    leftGreaves: ['Left Greaves', "#ffffff"],
-    rightGreaves: ['Right Greaves', "#ffffff"]
+  curArmour: {
+    name: "",
+    key: ""
+  },
+  curColour: "#ffffff",
+  colours: {
+    helmet: "#FF0000",
+    cuirass: "#ffffff",
+    leftVambrace: "#ffffff",
+    rightVambrace: "#ffffff",
+    backpack: "#ffffff",
+    leftPauldron: "#ffffff",
+    rightPauldron: "#ffffff",
+    leftGreaves: "#ffffff",
+    rightGreaves: "#ffffff"
   }
 });
 
 const Model = ({ ...props }) => {
+
+  const snap = useSnapshot(state);
+
+  const handleClick = (e, str, key) => {
+    e.stopPropagation();
+    state.curArmour.name = str;
+    state.curArmour.key = key;
+    console.log("test", state);
+  };
+
   const group = useRef();
 
   const { nodes, materials } = useGLTF("/black-templar/bt.gltf");
@@ -29,32 +43,48 @@ const Model = ({ ...props }) => {
     <group ref={group} {...props} dispose={null} position={[0, -150, -20]}>
       <group rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
         <mesh
+          onClick={(e) => handleClick(e, "Helmet", "helmet")}
           geometry={nodes.Object_6.geometry}
           material={materials.wire_088199225}
+          material-color={snap.colours.helmet}
         />
         <mesh
+          onClick={(e) => handleClick(e, "Cuirass", "cuirass")}
           geometry={nodes.Object_7.geometry}
           material={materials.wire_134110008}
+          material-color={snap.colours.cuirass}
+
         />
         <mesh
+          onClick={(e) => handleClick(e, "Left Vambrace", "leftVambrace")}
           geometry={nodes.Object_3.geometry}
           material={materials.wire_026177026}
+          material-color={snap.colours.leftVambrace}
         />
         <mesh
+          onClick={(e) => handleClick(e, "Right Vambrace", "rightVambrace")}
           geometry={nodes.Object_2.geometry}
           material={materials.wire_008110134}
+          material-color={snap.colours.rightVambrace}
         />
         <mesh
+          onClick={(e) => handleClick(e, "Backpack", "backpack")}
           geometry={nodes.Object_4.geometry}
           material={materials.wire_028089177}
+          material-color={snap.colours.backpack}
         />
         <mesh
+          onClick={(e) => handleClick(e, "Left Pauldron", "leftPauldron")}
           geometry={nodes.Object_8.geometry}
           material={materials.wire_154185229}
+          material-color={snap.colours.leftPauldron}
         />
         <mesh
+          onClick={(e) => handleClick(e, "Right Pauldron", "rightPauldron")}
           geometry={nodes.Object_9.geometry}
           material={materials.wire_224198087}
+          material-color={snap.colours.rightPauldron}
+
         />
         <mesh
           geometry={nodes.Object_10.geometry}
@@ -70,8 +100,11 @@ const Model = ({ ...props }) => {
 }
 
 function App() {
+  const snap = useSnapshot(state);
+
   return (
     <div className="canvas-container" >
+      <h1 className="current-armour">{snap.curArmour.name}</h1>
       <HexColorPicker className="model-painter" />
       <Canvas concurrent pixelRatio={[1, 1.5]}>
         <Camera />
