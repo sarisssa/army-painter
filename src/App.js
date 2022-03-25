@@ -2,7 +2,7 @@ import React, { Suspense, useRef, useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import { HexColorPicker } from "react-colorful";
-import { proxy, useProxy, useSnapshot } from "valtio";
+import { proxy, useSnapshot } from "valtio";
 
 import './App.css';
 
@@ -84,28 +84,40 @@ const Model = ({ ...props }) => {
           geometry={nodes.Object_9.geometry}
           material={materials.wire_224198087}
           material-color={snap.colours.rightPauldron}
-
         />
         <mesh
+          onClick={(e) => handleClick(e, "Left Greaves", "leftGreaves")}
           geometry={nodes.Object_10.geometry}
           material={materials.wire_227152152}
+          material-color={snap.colours.leftGreaves}
         />
         <mesh
+          onClick={(e) => handleClick(e, "Right Greaves", "rightGreaves")}
           geometry={nodes.Object_5.geometry}
           material={materials.wire_086086086}
+          material-color={snap.colours.rightGreaves}
         />
       </group>
     </group>
   );
 }
 
-function App() {
+const App = () => {
   const snap = useSnapshot(state);
+
+  const handleChange = (color) => {
+    state.curColour = color;
+    state.colours[state.curArmour.key] = color; //Paint currently selected armour piece
+  };
 
   return (
     <div className="canvas-container" >
       <h1 className="current-armour">{snap.curArmour.name}</h1>
-      <HexColorPicker className="model-painter" />
+      <HexColorPicker
+        className="model-painter"
+        color={snap.curColour}
+        onChange={handleChange}
+      />
       <Canvas concurrent pixelRatio={[1, 1.5]}>
         <Camera />
         <ambientLight intensity={0.3} />
