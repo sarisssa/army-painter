@@ -1,7 +1,15 @@
-import React, { Suspense, useRef, useEffect } from "react";
-import { Canvas } from "@react-three/fiber";
-import { useGLTF, OrbitControls } from "@react-three/drei";
+import React, { Suspense, useRef } from "react";
+import { Canvas, useLoader } from "@react-three/fiber";
+import {
+  useGLTF,
+  OrbitControls,
+  Plane,
+  Environment,
+  Sky
+} from "@react-three/drei";
 import { HexColorPicker } from "react-colorful";
+import { TextureLoader } from "three/src/loaders/TextureLoader";
+
 import { proxy, useSnapshot } from "valtio";
 
 import './App.css';
@@ -103,6 +111,20 @@ const Model = ({ ...props }) => {
   );
 }
 
+const DesertPlane = () => {
+  const texture = useLoader(TextureLoader, "desert.avif");
+
+  return (
+    <Plane
+      args={[2500, 900, 10]}
+      position={[0, -5, 0]}
+      rotation={[-Math.PI / 2, 0, 0]}
+    >
+      <meshPhysicalMaterial color="tan" map={texture} />
+    </Plane>
+  );
+};
+
 const App = () => {
   const snap = useSnapshot(state);
 
@@ -128,6 +150,7 @@ const App = () => {
         <ambientLight intensity={0.3} />
         <spotLight intensity={0.3} angle={0.1} penumbra={1} position={[5, 25, 20]} />
         <Suspense fallback={null}>
+          <DesertPlane />
           <Model />
         </Suspense>
         <OrbitControls
