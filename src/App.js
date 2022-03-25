@@ -7,14 +7,15 @@ import {
   Environment,
   Sky
 } from "@react-three/drei";
-import { HexColorPicker } from "react-colorful";
-import { TextureLoader } from "three/src/loaders/TextureLoader";
 
+import { HexColorPicker } from "react-colorful";
 import { proxy, useSnapshot } from "valtio";
 
-import './App.css';
+import { TextureLoader } from "three/src/loaders/TextureLoader";
 
-//Snap to read, state to write/mutate
+import "./App.css";
+
+
 const state = proxy({
   curArmour: {
     name: "",
@@ -34,7 +35,7 @@ const state = proxy({
   }
 });
 
-const Model = ({ ...props }) => {
+function Model({ ...props }) {
 
   const snap = useSnapshot(state);
 
@@ -48,9 +49,10 @@ const Model = ({ ...props }) => {
   const group = useRef();
 
   const { nodes, materials } = useGLTF("/black-templar/bt.gltf");
+
   return (
-    <group ref={group} {...props} dispose={null} position={[0, -150, -20]}>
-      <group rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
+    <group ref={group} {...props} dispose={null} position={[0, -150, 0]}>
+      <group rotation={[-Math.PI / 2, 0, -Math.PI]}>
         <mesh
           onClick={(e) => handleClick(e, "Helmet", "helmet")}
           geometry={nodes.Object_6.geometry}
@@ -62,7 +64,6 @@ const Model = ({ ...props }) => {
           geometry={nodes.Object_7.geometry}
           material={materials.wire_134110008}
           material-color={snap.colours.cuirass}
-
         />
         <mesh
           onClick={(e) => handleClick(e, "Left Vambrace", "leftVambrace")}
@@ -125,34 +126,36 @@ const DesertPlane = () => {
   );
 };
 
-const App = () => {
+function App() {
   const snap = useSnapshot(state);
 
   const handleChange = (color) => {
     state.curColour = color;
-    state.colours[state.curArmour.key] = color; //Paint currently selected armour piece
+    state.colours[state.curArmour.key] = color;
   };
 
   return (
-    <div className="canvas-container" >
-      <h1 className="current-armour">{snap.curArmour.name}</h1>
+    <div className="canvas-container">
+      <h1 className="current-armour-header">{snap.curArmour.name}</h1>
       <HexColorPicker
         className="model-painter"
         color={snap.curColour}
         onChange={handleChange}
       />
       <Canvas
-        concurrent
-        pixelRatio={[1, 1.5]}
         style={{ minHeight: "100vh" }}
         camera={{ position: [0, 80, 50] }}
       >
-        <ambientLight intensity={0.3} />
-        <spotLight intensity={0.3} angle={0.1} penumbra={1} position={[5, 25, 20]} />
-        <Suspense fallback={null}>
-          <DesertPlane />
-          <Model />
-        </Suspense>
+        <group rotation={[0, 0, 0]} position={[0, -35, 30]}>
+          <Suspense fallback={null}>
+            <DesertPlane />
+            <group scale={0.25} position={[0, 32, 0]}>
+              <Model />
+              <Environment preset="city" />
+              <Sky />
+            </group>
+          </Suspense>
+        </group>
         <OrbitControls
           minPolarAngle={Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
