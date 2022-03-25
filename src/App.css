@@ -1,6 +1,7 @@
-/* .canvas-container {
-  height: 100vh;
-} */
+* {
+  margin: 0;
+  padding: 0;
+}
 
 .model-painter {
   position: absolute !important;
@@ -8,4 +9,12 @@
   left: 70px;
   width: 90px !important;
   height: 90px !important;
+  z-index: 9;
+}
+
+.current-armour-header {
+  position: absolute !important;
+  top: 0;
+  left: 50vw;
+  z-index: 9;
 }
