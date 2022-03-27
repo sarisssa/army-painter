@@ -5,15 +5,15 @@ import { TextureLoader } from "three/src/loaders/TextureLoader";
 import Rock from "./rock.component";
 
 const DesertPlane = () => {
-    const texture = useLoader(TextureLoader, "desert.avif");
+    const texture = useLoader(TextureLoader, "desert.avif"); //HIGHER QUALITY JPEG
 
     return (
         <Plane
-            args={[2500, 900, 10]}
-            position={[0, -5, 0]}
+            args={[500, 500, 1000]}
+            position={[0, -1, 0]}
             rotation={[-Math.PI / 2, 0, 0]}
         >
-            <meshPhysicalMaterial color="tan" map={texture} />
+            <meshPhysicalMaterial roughness={1} clearcoatRoughness={1} map={texture} />
             <Rock />
         </Plane>
     );
