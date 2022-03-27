@@ -5,7 +5,7 @@ const Rock = ({ ...props }) => {
     const group = useRef();
     const { nodes, materials } = useGLTF("/Rock_5.glb");
     return (
-        <group scale={4} ref={group} {...props} dispose={null}>
+        <group scale={0.25} ref={group} {...props} position={[5, 0, 0]} dispose={null}>
             <mesh
                 geometry={nodes.Rock_5.geometry}
                 material={materials.Rock_5}
