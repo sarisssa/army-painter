@@ -1,23 +1,19 @@
 import { useState } from "react";
-import { colorState } from "../../utils/store";
+import { colorState } from "../../utils/ColorStore";
 import { useSnapshot } from "valtio";
 import { HexColorPicker } from "react-colorful";
+import { setColor } from "../../utils/ColorUtils";
 
 import { animated as a, useSpring } from "react-spring";
 
 import './drawer.styles.css';
 
-const Drawer = () => {
+const Drawer = (): JSX.Element => {
     const snap = useSnapshot(colorState);
 
     const [active, setActive] = useState(true);
 
-    const handleChange = (color) => {
-        colorState.curColour = color;
-        colorState.colours[colorState.curArmour.key] = color;
-    };
-
-    const handleToggle = (e) => {
+    const handleToggle = (): void => {
         setActive(!active)
     }
 
@@ -44,7 +40,10 @@ const Drawer = () => {
                 <HexColorPicker
                     className='color-menu'
                     color={snap.curColour}
-                    onChange={handleChange}
+                    onChange={(value: string) => {
+                        const color = value as `#${number | string}`; //Convert ColorPicker type from string to string interpolated type
+                        setColor(color);
+                    }}
                 />
             </a.div>
         </a.section>

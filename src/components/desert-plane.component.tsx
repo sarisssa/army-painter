@@ -3,9 +3,13 @@ import { Plane } from "@react-three/drei";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 
 import Rock from "./rock.component";
+import { RepeatWrapping, Vector2 } from "three";
 
-const DesertPlane = () => {
-    const texture = useLoader(TextureLoader, "desert.avif"); //HIGHER QUALITY JPEG
+const DesertPlane = (): JSX.Element => {
+    const texture = useLoader(TextureLoader, "sand.jpeg");
+    texture.wrapS = RepeatWrapping;
+    texture.wrapT = RepeatWrapping;
+    texture.repeat.set(100, 100);
 
     return (
         <Plane

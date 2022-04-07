@@ -3,13 +3,9 @@
   padding: 0;
 }
 
-.model-painter {
-  position: absolute !important;
-  top: 74px;
-  left: 70px;
-  width: 90px !important;
-  height: 90px !important;
-  z-index: 9;
+.canvas {
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 .current-armour-header {
@@ -17,4 +13,10 @@
   top: 0;
   left: 50vw;
   z-index: 9;
+}
+
+.react-colorful {
+  margin-right: 165px;
+  width: 0px;
+  height: 0px
 }
