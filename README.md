@@ -8,7 +8,7 @@ Note, the project is not done yet and I will add more props to the environment(a
 
 ## Demo
 
-https://army-painter.vercel.app/
+https://army-painter-sarisssa.vercel.app/
 
 ## App in Action
 
